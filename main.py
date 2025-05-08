@@ -4,7 +4,7 @@ import time
 import os
 from datetime import datetime
 
-CSV_FILE = "air_quality_weather_data.csv"
+CSV_FILE = "data.csv"
 
 # Danh sách AQI ID của các trạm
 AQI_IDS = ["13427", "13026", "13415","13439", "13422", "12960", "13027", 
