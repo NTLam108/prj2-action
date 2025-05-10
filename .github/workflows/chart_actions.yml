@@ -1,4 +1,4 @@
-name: AQI Data Collection and Plotting
+name: AQI Data Chart
 
 on:
   schedule:
