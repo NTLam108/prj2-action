@@ -32,7 +32,7 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git pull origin main --rebase
         git add data.csv
         git commit -m "Update AQI data - $(date -u '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+        git pull origin main --rebase
         git push origin main
