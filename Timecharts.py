@@ -12,29 +12,37 @@ df['Timestamp'] = pd.to_datetime(df['Timestamp'])
 df['date'] = df['Timestamp'].dt.date
 df['hour'] = df['Timestamp'].dt.hour
 
-# Chọn giá trị để vẽ (có thể đổi thành "AQI" hoặc "PM2.5")
+# Giá trị cần vẽ, đổi thành "AQI" nếu muốn
 value_col = "PM2.5"
 
 # Tạo thư mục lưu file ảnh nếu chưa tồn tại
 output_dir = "Timechart"
 os.makedirs(output_dir, exist_ok=True)
 
-# Vẽ biểu đồ
-plt.figure(figsize=(12, 6))
-for date, group in df.groupby('date'):
-    plt.plot(group['hour'], group[value_col], marker='o', label=str(date))
+# Lấy danh sách trạm duy nhất
+stations = df['Station Name'].unique()
 
-plt.title(f"{value_col} theo giờ trong ngày")
-plt.xlabel("Giờ trong ngày")
-plt.ylabel(value_col)
-plt.xticks(range(0, 24))
-plt.legend(title='Ngày', bbox_to_anchor=(1.05, 1), loc='upper left')
-plt.grid(True)
-plt.tight_layout()
+for station in stations:
+    df_station = df[df['Station Name'] == station]
 
-# Lưu ảnh
-output_file = os.path.join(output_dir, f"{value_col}_time_chart.png")
-plt.savefig(output_file, dpi=300)
-plt.close()
+    plt.figure(figsize=(12, 6))
+    for date, group in df_station.groupby('date'):
+        plt.plot(group['hour'], group[value_col], marker='o', label=str(date))
 
-print(f"Đã lưu biểu đồ vào file: {output_file}")
+    plt.title(f"{value_col} theo giờ trong ngày - Trạm: {station}")
+    plt.xlabel("Giờ trong ngày")
+    plt.ylabel(value_col)
+    plt.xticks(range(0, 24))
+    plt.legend(title='Ngày', bbox_to_anchor=(1.05, 1), loc='upper left')
+    plt.grid(True)
+    plt.tight_layout()
+
+    # Đặt tên file gọn, tránh ký tự đặc biệt
+    safe_station_name = "".join(c if c.isalnum() or c in (' ', '-') else '_' for c in station).strip()
+    output_file = os.path.join(output_dir, f"{safe_station_name}_{value_col}_time_chart.png")
+
+    plt.savefig(output_file, dpi=300)
+    plt.close()
+
+    print(f"Đã lưu biểu đồ trạm '{station}' vào file: {output_file}")
+
