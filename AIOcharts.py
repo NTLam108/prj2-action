@@ -5,16 +5,16 @@ import os
 
 CSV_FILE = "data.csv"
 
-# Các chỉ số muốn vẽ
+# Các chỉ số muốn vẽ (đã bỏ "Pressure")
 INDICATORS = [
     "AQI", "PM2.5", "PM10", "CO", "NO2", "O3", "SO2",
-    "Temperature", "Humidity", "Pressure", "Wind Speed"
+    "Temperature", "Humidity", "Wind Speed"
 ]
 
-# Màu mặc định cho từng chỉ số
+# Màu mặc định cho từng chỉ số (tương ứng số lượng chỉ số hiện tại)
 COLORS = [
     "blue", "green", "red", "orange", "purple", "brown",
-    "pink", "black", "cyan", "magenta", "gray", "olive"
+    "pink", "black", "cyan", "magenta", "olive"
 ]
 
 # Thư mục lưu ảnh đầu ra
@@ -62,9 +62,10 @@ def draw_all_metrics_by_station():
         plt.tight_layout()
 
         safe_name = station.replace('/', '_').replace(' ', '_').replace(':', '_')
-        filename = f"{OUTPUT_DIR}/full_metrics_{safe_name}.png"
+        filename = f"{OUTPUT_DIR}/{safe_name}.png"
         plt.savefig(filename, dpi=300)
         plt.close()
-      
+
 if __name__ == "__main__":
     draw_all_metrics_by_station()
+
