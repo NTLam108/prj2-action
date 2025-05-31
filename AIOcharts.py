@@ -30,6 +30,9 @@ def draw_all_indicators():
 
     df = pd.read_csv(CSV_FILE, encoding='utf-8-sig')
 
+     # Chuyển cột AQI sang số
+    df['AQI'] = pd.to_numeric(df['AQI'], errors='coerce')
+
     # Đảm bảo các cột có định dạng đúng
     df['Timestamp'] = pd.to_datetime(df['Timestamp'], errors='coerce')
     df = df.dropna(subset=['Timestamp', 'Station Name'])
