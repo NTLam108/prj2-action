@@ -66,7 +66,7 @@ plt.tight_layout()
 
 # Tạo tên file với timestamp
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_file = os.path.join(output_dir, f"VungTau_PM25_Trend_{timestamp}.png")
+output_file = os.path.join(output_dir, f"VungTau_PM25_{timestamp}.png")
 
 # Lưu biểu đồ với chất lượng cao
 plt.savefig(output_file, dpi=300, bbox_inches='tight')
