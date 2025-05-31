@@ -16,7 +16,7 @@ df['hour'] = df['Timestamp'].dt.hour
 value_col = "AQI"
 
 # Tạo thư mục lưu ảnh nếu chưa có
-output_dir = "Timechart"
+output_dir = "AQI_Timechart"
 os.makedirs(output_dir, exist_ok=True)
 
 # Lấy danh sách các trạm đo duy nhất
