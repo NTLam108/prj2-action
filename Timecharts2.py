@@ -14,26 +14,35 @@ value_col = "PM2.5"
 output_dir = "Timechart2"
 os.makedirs(output_dir, exist_ok=True)
 
-# Tính trung bình và độ lệch chuẩn PM2.5 theo giờ
-agg = df.groupby('hour')[value_col].agg(['mean', 'std']).reset_index()
+# Lấy danh sách các trạm (thành phố) duy nhất
+stations = df['Station Name'].unique()
 
-# Vẽ biểu đồ
-plt.figure(figsize=(12, 6))
-plt.plot(agg['hour'], agg['mean'], marker='o', color='blue', label='PM2.5 trung bình')
-plt.fill_between(agg['hour'], agg['mean'] - agg['std'], agg['mean'] + agg['std'],
-                 color='skyblue', alpha=0.3, label='± Độ lệch chuẩn')
+for station in stations:
+    df_station = df[df['Station Name'] == station]
+    
+    if df_station.empty:
+        continue
+    
+    agg = df_station.groupby('hour')[value_col].agg(['mean', 'std']).reset_index()
 
-plt.title('PM2.5 trung bình theo giờ trong ngày (nhiều ngày)')
-plt.xlabel('Giờ trong ngày')
-plt.ylabel('PM2.5 (µg/m³)')
-plt.xticks(range(0, 24))
-plt.grid(True)
-plt.legend()
-plt.tight_layout()
+    plt.figure(figsize=(12, 6))
+    plt.plot(agg['hour'], agg['mean'], marker='o', color='blue', label='PM2.5 trung bình')
+    plt.fill_between(agg['hour'], agg['mean'] - agg['std'], agg['mean'] + agg['std'],
+                     color='skyblue', alpha=0.3, label='± Độ lệch chuẩn')
 
-# Lưu ảnh
-output_path = os.path.join(output_dir, "PM2.5_by_hour.png")
-plt.savefig(output_path, dpi=300)
-plt.close()
+    plt.title(f'PM2.5 trung bình theo giờ - Trạm: {station}')
+    plt.xlabel('Giờ trong ngày')
+    plt.ylabel('PM2.5 (µg/m³)')
+    plt.xticks(range(0, 24))
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+
+    # Làm sạch tên trạm để dùng đặt tên file
+    safe_name = "".join(c if c.isalnum() or c in (' ', '-') else '_' for c in station).strip()
+    output_path = os.path.join(output_dir, f"{safe_name}_PM2.5_std_by_hour.png")
+    
+    plt.savefig(output_path, dpi=300)
+    plt.close()
 
 
