@@ -44,4 +44,4 @@ for station in stations:
     plt.savefig(output_file, dpi=300)
     plt.close()
 
-    print(f"✅ Đã lưu biểu đồ AQI của trạm '{station}' vào: {output_file}")
+    print(f"Đã lưu biểu đồ AQI của trạm '{station}' vào: {output_file}")
