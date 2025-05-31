@@ -44,4 +44,3 @@ for station in stations:
     
     plt.savefig(output_path, dpi=300)
     plt.close()
-
