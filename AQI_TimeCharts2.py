@@ -10,6 +10,9 @@ df['hour'] = df['Timestamp'].dt.hour
 # Chỉ số cần vẽ
 value_col = "AQI"
 
+# Chuyển dữ liệu AQI sang số
+df[value_col] = pd.to_numeric(df[value_col], errors='coerce')
+
 # Tạo thư mục lưu ảnh nếu chưa có
 output_dir = "AQI_Timechart2"
 os.makedirs(output_dir, exist_ok=True)
@@ -44,3 +47,5 @@ for station in stations:
     
     plt.savefig(output_path, dpi=300)
     plt.close()
+
+
