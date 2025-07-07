@@ -29,7 +29,7 @@ jobs:
       # Chạy vẽ biểu đồ
       - name: Run AQI plotting
         run: |
-          python AQI_TimeCharts.py  # Chạy file vẽ biểu đồ
+          python aqi_chart.py  # Chạy file vẽ biểu đồ
 
       # Commit kết quả mới vào repo nếu có thay đổi (file hình ảnh và CSV)
       - name: Commit changes
